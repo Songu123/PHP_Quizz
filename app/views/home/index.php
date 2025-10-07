@@ -6,7 +6,7 @@
         <?php if (isset($_SESSION['user_id'])): ?>
             <h1 class="display-4">
                 <i class="fas fa-home me-3"></i>
-                Chào mừng trở lại, <?php echo $_SESSION['user_name']; ?>!
+                Chào mừng ban trở lại, <?php echo $_SESSION['user_name']; ?>!
             </h1>
             <p class="lead">Bạn đã đăng nhập thành công vào hệ thống.</p>
             <hr class="my-4">
