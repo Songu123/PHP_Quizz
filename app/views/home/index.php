@@ -1,5 +1,41 @@
 <?php require_once APP . '/views/partials/header.php'; ?>
 
+<div class="jumbotron bg-gradient text-white p-5 rounded position-relative overflow-hidden">
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); opacity: 0.9;"></div>
+    <div class="position-relative">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <h1 class="display-4">
+                <i class="fas fa-home me-3"></i>
+                Chào mừng ban trở lại, <?php echo $_SESSION['user_name']; ?>!
+            </h1>
+            <p class="lead">Bạn đã đăng nhập thành công vào hệ thống.</p>
+            <hr class="my-4">
+            <p>Khám phá các tính năng của ứng dụng và quản lý tài khoản của bạn.</p>
+            <div class="d-flex gap-3 flex-wrap">
+                <a class="btn btn-light btn-lg" href="<?php echo URLROOT; ?>/user/profile" role="button">
+                    <i class="fas fa-user me-2"></i>Hồ sơ của tôi
+                </a>
+                <a class="btn btn-outline-light btn-lg" href="<?php echo URLROOT; ?>/home/about" role="button">
+                    <i class="fas fa-info-circle me-2"></i>Tìm hiểu thêm
+                </a>
+            </div>
+        <?php else: ?>
+            <h1 class="display-4">
+                <i class="fas fa-rocket me-3"></i>
+                Chào mừng bạn!
+            </h1>
+            <p class="lead"><?php echo $message; ?></p>
+            <hr class="my-4">
+            <p>Đăng ký tài khoản để trải nghiệm đầy đủ các tính năng của ứng dụng.</p>
+            <div class="d-flex gap-3 flex-wrap">
+                <a class="btn btn-light btn-lg" href="<?php echo URLROOT; ?>/auth/register" role="button">
+                    <i class="fas fa-user-plus me-2"></i>Đăng ký ngay
+                </a>
+                <a class="btn btn-outline-light btn-lg" href="<?php echo URLROOT; ?>/auth/login" role="button">
+                    <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                </a>
+            </div>
+        <?php endif; ?>
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
