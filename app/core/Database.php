@@ -39,7 +39,10 @@ class Database {
 
     // Không cho clone hoặc unserialize (bảo toàn singleton)
     private function __clone() {}
-    private function __wakeup() {}
+    
+    public function __wakeup() {
+        throw new \Exception("Cannot unserialize singleton");
+    }
 
     /**
      * Lấy instance duy nhất của Database
@@ -112,12 +115,6 @@ class Database {
      * @return array
      */
     public function fetchAll(): array {
-        // Nếu statement chưa được execute (ví dụ gọi query() mà ko truyền params), execute ở đây
-        if ($this->stmt && $this->stmt->errorCode() === '00000') {
-            // đã execute
-            return $this->stmt->fetchAll();
-        }
-
         $this->execute();
         return $this->stmt->fetchAll();
     }
@@ -127,10 +124,6 @@ class Database {
      * @return object|false
      */
     public function fetch() {
-        if ($this->stmt && $this->stmt->errorCode() === '00000') {
-            return $this->stmt->fetch();
-        }
-
         $this->execute();
         return $this->stmt->fetch();
     }

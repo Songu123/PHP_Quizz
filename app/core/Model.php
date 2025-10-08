@@ -7,7 +7,8 @@ class Model {
     protected $table;
     
     public function __construct() {
-        $this->db = new Database();
+        // Sử dụng Singleton pattern để lấy Database instance
+        $this->db = Database::getInstance();
     }
     
     /**

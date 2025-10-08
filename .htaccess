@@ -1,5 +1,0 @@
-RewriteEngine On
-
-# Redirect to public folder
-RewriteCond %{REQUEST_URI} !^/doan_mon/public/
-RewriteRule ^(.*)$ /doan_mon/public/$1 [L,QSA]

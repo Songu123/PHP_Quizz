@@ -25,6 +25,8 @@ class Auth extends Controller {
             header('Location: ' . URLROOT);
             exit();
         }
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Xử lý form đăng nhập
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             // Xử lý form đăng nhập
@@ -85,6 +87,10 @@ class Auth extends Controller {
             header('Location: ' . URLROOT);
             exit();
         }
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Xử lý form đăng ký
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             // Xử lý form đăng ký
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             // Xử lý form đăng ký
