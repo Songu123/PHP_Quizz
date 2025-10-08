@@ -188,4 +188,20 @@ class User extends Model {
         
         return false;
     }
+    
+    /**
+     * Cập nhật mật khẩu user
+     */
+    public function updatePassword($email, $newPassword) {
+        // Hash password
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        
+        $sql = "UPDATE {$this->table} SET password = :password WHERE email = :email";
+        $params = [
+            'password' => $hashedPassword,
+            'email' => $email
+        ];
+        
+        return $this->db->query($sql, $params);
+    }
 }
