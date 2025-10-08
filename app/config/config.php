@@ -15,10 +15,10 @@ define('DB_PASS', isset($_ENV['DB_PASSWORD']) ? $_ENV['DB_PASSWORD'] : '');
 define('DB_NAME', isset($_ENV['DB_DATABASE']) ? $_ENV['DB_DATABASE'] : 'quizz_loq');
 
 // Application URL
-define('URLROOT', isset($_ENV['URLROOT']) ? $_ENV['URLROOT'] : 'http://localhost/doan_mon/public');
+define('URLROOT', isset($_ENV['URLROOT']) ? $_ENV['URLROOT'] : 'http://localhost/PHP_Quizz/public');
 
 // Site name
-define('SITENAME', 'Đồ Án Môn');
+define('SITENAME', 'QuizMaster');
 
 // App version
 define('APPVERSION', '1.0.0');
