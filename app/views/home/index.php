@@ -9,7 +9,7 @@
                 <div class="hero-content">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <div class="welcome-back">
-                            <span class="welcome-label">Chào mừng trở lại!</span>
+                            <span class="welcome-label">Chào mừng bạn đã trở lại!</span>
                             <h1 class="hero-title">
                                 Xin chào, <span class="user-highlight"><?php echo $_SESSION['user_name']; ?></span>
                                 <div class="hero-emoji">🎯</div>
