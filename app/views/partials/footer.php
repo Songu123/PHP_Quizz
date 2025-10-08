@@ -1,4 +1,4 @@
-    </main>
+</main>
     
     <!-- Footer -->
     <footer class="quiz-footer mt-5">
@@ -145,15 +145,10 @@
             });
         });
         
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.quiz-navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+
     </script>
 </body>
 </html>
+
+<!-- Header.php - đã sửa -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
