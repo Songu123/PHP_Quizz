@@ -25,27 +25,17 @@ class Auth extends Controller {
             header('Location: ' . URLROOT);
             exit();
         }
-        
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Xử lý form đăng nhập
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            // Xử lý form đăng nhập
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             
-            $data = [
-                'title' => 'Đăng Nhập',
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
-                'email_err' => '',
-                'password_err' => ''
-            ];
+            $data['email'] = trim($_POST['email'] ?? '');
+            $data['password'] = trim($_POST['password'] ?? '');
             
             // Validate email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Vui lòng nhập email';
             }
             
-            // Validate password
+            // Validate password 
             if (empty($data['password'])) {
                 $data['password_err'] = 'Vui lòng nhập mật khẩu';
             }
@@ -57,25 +47,15 @@ class Auth extends Controller {
                 if ($loggedInUser) {
                     // Tạo session
                     $this->createUserSession($loggedInUser);
+                    return;
                 } else {
                     $data['password_err'] = 'Email hoặc mật khẩu không đúng';
-                    $this->view('auth/login', $data);
                 }
-            } else {
-                $this->view('auth/login', $data);
             }
-        } else {
-            // Load view
-            $data = [
-                'title' => 'Đăng Nhập',
-                'email' => '',
-                'password' => '',
-                'email_err' => '',
-                'password_err' => ''
-            ];
-            
-            $this->view('auth/login', $data);
         }
+
+        // Load view
+        $this->view('auth/login', $data);
     }
     
     /**
@@ -87,26 +67,12 @@ class Auth extends Controller {
             header('Location: ' . URLROOT);
             exit();
         }
-        
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Xử lý form đăng ký
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            // Xử lý form đăng ký
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            // Xử lý form đăng ký
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             
-            $data = [
-                'title' => 'Đăng Ký',
-                'name' => trim($_POST['name']),
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirm_password']),
-                'name_err' => '',
-                'email_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => ''
-            ];
+            $data['name'] = trim($_POST['name'] ?? '');
+            $data['email'] = trim($_POST['email'] ?? '');
+            $data['password'] = trim($_POST['password'] ?? '');
+            $data['confirm_password'] = trim($_POST['confirm_password'] ?? '');
             
             // Validate name
             if (empty($data['name'])) {
@@ -116,11 +82,8 @@ class Auth extends Controller {
             // Validate email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Vui lòng nhập email';
-            } else {
-                // Kiểm tra email đã tồn tại
-                if ($this->userModel->findUserByEmail($data['email'])) {
-                    $data['email_err'] = 'Email đã được sử dụng';
-                }
+            } elseif ($this->userModel->findUserByEmail($data['email'])) {
+                $data['email_err'] = 'Email đã được sử dụng';
             }
             
             // Validate password
@@ -133,14 +96,14 @@ class Auth extends Controller {
             // Validate confirm password
             if (empty($data['confirm_password'])) {
                 $data['confirm_password_err'] = 'Vui lòng xác nhận mật khẩu';
-            } else {
-                if ($data['password'] != $data['confirm_password']) {
-                    $data['confirm_password_err'] = 'Mật khẩu xác nhận không khớp';
-                }
+            } elseif ($data['password'] != $data['confirm_password']) {
+                $data['confirm_password_err'] = 'Mật khẩu xác nhận không khớp';
             }
             
             // Make sure errors are empty
-            if (empty($data['name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+            if (empty($data['name_err']) && empty($data['email_err']) && 
+                empty($data['password_err']) && empty($data['confirm_password_err'])) {
+                
                 // Hash password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                 
@@ -155,25 +118,11 @@ class Auth extends Controller {
                 } else {
                     die('Có lỗi xảy ra');
                 }
-            } else {
-                $this->view('auth/register', $data);
             }
-        } else {
-            // Load view
-            $data = [
-                'title' => 'Đăng Ký',
-                'name' => '',
-                'email' => '',
-                'password' => '',
-                'confirm_password' => '',
-                'name_err' => '',
-                'email_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => ''
-            ];
-            
-            $this->view('auth/register', $data);
         }
+
+        // Load view
+        $this->view('auth/register', $data);
     }
     
     /**

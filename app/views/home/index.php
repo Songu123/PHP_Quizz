@@ -1,5 +1,6 @@
 <?php require_once APP . '/views/partials/header.php'; ?>
 
+
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
