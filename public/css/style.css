@@ -1,4 +1,4 @@
-/* QuizMaster - Modern Quiz Game CSS */
+     /* QuizMaster - Modern Quiz Game CSS */
 
 /* =============== FONTS & VARIABLES =============== */
 :root {
@@ -59,6 +59,65 @@ body {
     padding: 0.5rem 0;
 }
 
+.navbar-toggler {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.5rem 0.75rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-collapse {
+    background: transparent;
+}
+
+@media (max-width: 992px) {
+    .navbar-collapse {
+        background: rgba(118, 75, 162, 0.98);
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-medium);
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem !important;
+        margin: 0.25rem 0;
+        border-radius: var(--border-radius);
+    }
+    
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link:focus {
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .dropdown-menu {
+        background: rgba(102, 126, 234, 0.95);
+        border: none;
+        box-shadow: var(--shadow-medium);
+    }
+    
+    .dropdown-item {
+        color: white;
+        padding: 0.75rem 1rem;
+    }
+    
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+    }
+    
+    .dropdown-divider {
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
 .quiz-brand {
     display: flex;
     align-items: center;
@@ -105,10 +164,22 @@ body {
     transform: translateY(-2px);
 }
 
+.navbar-nav .nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white !important;
+}
+
 .user-stats {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.user-stats .badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    font-weight: 500;
 }
 
 .user-dropdown {
@@ -127,6 +198,7 @@ body {
     justify-content: center;
     color: white;
     font-size: 0.875rem;
+    flex-shrink: 0;
 }
 
 .btn-quiz-primary {
@@ -675,19 +747,83 @@ body {
 }
 
 /* =============== RESPONSIVE DESIGN =============== */
+
+/* Large Desktop */
+@media (max-width: 1400px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .section-title {
+        font-size: 2.25rem;
+    }
+}
+
+/* Desktop */
 @media (max-width: 1200px) {
     .quiz-cards-demo {
         height: 400px;
+    }
+    
+    .quiz-card {
+        min-width: 150px;
+        padding: 1.25rem;
     }
     
     .quiz-card:nth-child(1) { top: 20px; left: 20px; }
     .quiz-card:nth-child(2) { top: 100px; right: 30px; }
     .quiz-card:nth-child(3) { bottom: 100px; left: 30px; }
     .quiz-card:nth-child(4) { bottom: 20px; right: 20px; }
+    
+    .hero-title {
+        font-size: 2.75rem;
+    }
+    
+    .stat-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+    }
+    
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.75rem;
+    }
 }
 
+/* Tablet Landscape */
 @media (max-width: 992px) {
+    body {
+        padding-top: 70px;
+    }
+    
+    .quiz-navbar {
+        padding: 0.75rem 0;
+    }
+    
+    .quiz-brand {
+        font-size: 1.25rem;
+    }
+    
+    .quiz-icon {
+        font-size: 1.5rem;
+    }
+    
+    .hero-section {
+        min-height: auto;
+        padding: 4rem 0;
+    }
+    
     .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.125rem;
+    }
+    
+    .hero-emoji {
         font-size: 2.5rem;
     }
     
@@ -700,46 +836,166 @@ body {
     }
     
     .quiz-card {
-        min-width: 140px;
+        min-width: 130px;
         padding: 1rem;
     }
     
-    .footer-stats {
-        justify-content: start;
-        margin-top: 1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding-top: 70px;
+    .quiz-card .card-icon {
+        font-size: 2.5rem;
     }
     
-    .hero-title {
-        font-size: 2rem;
-        flex-direction: column;
-        align-items: flex-start;
+    .quiz-card h6 {
+        font-size: 0.875rem;
     }
     
-    .hero-actions {
-        justify-content: center;
-    }
-    
-    .hero-actions .btn {
-        flex: 1;
-        min-width: 200px;
-    }
-    
-    .quiz-cards-demo {
-        display: none;
+    .stats-section,
+    .features-section,
+    .subjects-section,
+    .cta-section {
+        padding: 3rem 0;
     }
     
     .section-title {
         font-size: 2rem;
     }
     
+    .section-header {
+        margin-bottom: 3rem;
+    }
+    
     .stat-number {
         font-size: 2.5rem;
+    }
+    
+    .footer-stats {
+        justify-content: start;
+        margin-top: 1rem;
+    }
+    
+    .user-stats {
+        display: none !important;
+    }
+    
+    .user-name {
+        display: none;
+    }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+    body {
+        padding-top: 65px;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem !important;
+        margin: 0.25rem 0;
+    }
+    
+    .hero-section {
+        padding: 3rem 0 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-emoji {
+        font-size: 2rem;
+    }
+    
+    .hero-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .hero-actions .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .quiz-cards-demo {
+        display: none;
+    }
+    
+    .hero-visual {
+        display: none;
+    }
+    
+    .stats-section {
+        padding: 2.5rem 0;
+        margin-top: 0;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    
+    .feature-card,
+    .subject-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-title {
+        font-size: 1.25rem;
+    }
+    
+    .feature-description {
+        font-size: 0.9rem;
+    }
+    
+    .subject-image {
+        height: 120px;
+        font-size: 2.5rem;
+    }
+    
+    .subject-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .cta-section {
+        padding: 2.5rem 0;
     }
     
     .cta-card {
@@ -747,32 +1003,301 @@ body {
         text-align: center;
     }
     
+    .cta-title {
+        font-size: 1.5rem;
+    }
+    
+    .cta-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cta-card .row {
+        flex-direction: column;
+    }
+    
+    .cta-card .col-lg-4 {
+        margin-top: 1rem;
+        text-align: center !important;
+    }
+    
     .footer-stats {
         flex-direction: column;
         gap: 1rem;
     }
+    
+    .quiz-footer {
+        padding: 3rem 0 1.5rem;
+    }
 }
 
+/* Mobile Landscape */
 @media (max-width: 576px) {
+    body {
+        padding-top: 60px;
+        font-size: 14px;
+    }
+    
+    .quiz-navbar {
+        padding: 0.5rem 0;
+    }
+    
+    .quiz-brand {
+        font-size: 1.125rem;
+    }
+    
+    .quiz-icon {
+        font-size: 1.25rem;
+        margin-right: 0.25rem;
+    }
+    
+    .navbar-toggler {
+        padding: 0.25rem 0.5rem;
+        font-size: 1rem;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 0.9rem;
+    }
+    
+    .btn-quiz-primary,
+    .btn-quiz-outline {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+    }
+    
+    .hero-section {
+        padding: 2rem 0 1.5rem;
+    }
+    
+    .welcome-label {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
     .hero-title {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .hero-emoji {
         font-size: 1.75rem;
     }
     
     .hero-actions .btn {
-        min-width: auto;
-        width: 100%;
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .stats-section,
+    .features-section,
+    .subjects-section,
+    .cta-section {
+        padding: 2rem 0;
+    }
+    
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.9rem;
     }
     
     .stat-card {
-        padding: 1.5rem;
+        padding: 1.25rem;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .stat-number {
+        font-size: 1.75rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
     }
     
     .feature-card {
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
+    }
+    
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .feature-title {
+        font-size: 1.125rem;
+    }
+    
+    .feature-description {
+        font-size: 0.875rem;
+    }
+    
+    .subject-card {
+        margin-bottom: 1.25rem;
+    }
+    
+    .subject-image {
+        height: 100px;
+        font-size: 2rem;
+    }
+    
+    .subject-content {
+        padding: 1.25rem;
+    }
+    
+    .subject-name {
+        font-size: 1.125rem;
+    }
+    
+    .subject-description {
+        font-size: 0.8rem;
+    }
+    
+    .subject-stats {
+        font-size: 0.7rem;
     }
     
     .cta-card {
         padding: 1.5rem;
+    }
+    
+    .cta-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .cta-description {
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .quiz-footer {
+        padding: 2rem 0 1rem;
+    }
+    
+    .footer-brand {
+        font-size: 1.25rem;
+    }
+    
+    .footer-description {
+        font-size: 0.875rem;
+    }
+    
+    .footer-title {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-links {
+        font-size: 0.875rem;
+    }
+    
+    .social-links {
+        flex-wrap: wrap;
+    }
+    
+    .social-link {
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+    }
+    
+    .app-downloads {
+        gap: 0.75rem;
+    }
+    
+    .app-download {
+        padding: 0.65rem;
+        font-size: 0.85rem;
+    }
+    
+    .app-download i {
+        font-size: 1.25rem;
+    }
+    
+    .copyright {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+    
+    .stat-item {
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 375px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .section-title {
+        font-size: 1.35rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .feature-card,
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .cta-title {
+        font-size: 1.125rem;
+    }
+    
+    .btn-quiz-primary,
+    .btn-quiz-outline {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Landscape orientation fixes */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero-section {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-actions .btn {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
     }
 }
 
