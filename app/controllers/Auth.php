@@ -25,6 +25,17 @@ class Auth extends Controller {
             header('Location: ' . URLROOT);
             exit();
         }
+        
+        // Khởi tạo data
+        $data = [
+            'email' => '',
+            'password' => '',
+            'email_err' => '',
+            'password_err' => ''
+        ];
+        
+        // Kiểm tra request POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
             $data['email'] = trim($_POST['email'] ?? '');
@@ -33,6 +44,8 @@ class Auth extends Controller {
             // Validate email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Vui lòng nhập email';
+            } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                $data['email_err'] = 'Email không hợp lệ';
             }
             
             // Validate password 
@@ -67,6 +80,21 @@ class Auth extends Controller {
             header('Location: ' . URLROOT);
             exit();
         }
+        
+        // Khởi tạo data
+        $data = [
+            'name' => '',
+            'email' => '',
+            'password' => '',
+            'confirm_password' => '',
+            'name_err' => '',
+            'email_err' => '',
+            'password_err' => '',
+            'confirm_password_err' => ''
+        ];
+        
+        // Kiểm tra request POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
             $data['name'] = trim($_POST['name'] ?? '');
@@ -82,6 +110,8 @@ class Auth extends Controller {
             // Validate email
             if (empty($data['email'])) {
                 $data['email_err'] = 'Vui lòng nhập email';
+            } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                $data['email_err'] = 'Email không hợp lệ';
             } elseif ($this->userModel->findUserByEmail($data['email'])) {
                 $data['email_err'] = 'Email đã được sử dụng';
             }
@@ -161,6 +191,69 @@ class Auth extends Controller {
             return true;
         } else {
             return false;
+        }
+    }
+    
+    /**
+     * Đăng nhập bằng Google - Chuyển hướng đến Google OAuth
+     */
+    public function googlelogin() {
+        require_once APP . '/helpers/GoogleOAuth.php';
+        
+        $googleOAuth = new GoogleOAuth();
+        $authUrl = $googleOAuth->getAuthUrl();
+        
+        header('Location: ' . $authUrl);
+        exit();
+    }
+    
+    /**
+     * Xử lý callback từ Google OAuth
+     */
+    public function googlecallback() {
+        require_once APP . '/helpers/GoogleOAuth.php';
+        
+        // Lấy code và state từ URL
+        $code = $_GET['code'] ?? '';
+        $state = $_GET['state'] ?? '';
+        
+        if (empty($code)) {
+            $_SESSION['message'] = [
+                'type' => 'danger',
+                'text' => 'Đăng nhập Google thất bại! Vui lòng thử lại.'
+            ];
+            header('Location: ' . URLROOT . '/auth/login');
+            exit();
+        }
+        
+        // Xử lý callback
+        $googleOAuth = new GoogleOAuth();
+        $result = $googleOAuth->handleCallback($code, $state);
+        
+        if ($result['success']) {
+            $googleUser = $result['user'];
+            
+            // Tìm hoặc tạo user
+            $user = $this->userModel->createOrUpdateFromGoogle($googleUser);
+            
+            if ($user) {
+                // Tạo session
+                $this->createUserSession($user);
+            } else {
+                $_SESSION['message'] = [
+                    'type' => 'danger',
+                    'text' => 'Có lỗi xảy ra khi tạo tài khoản. Vui lòng thử lại!'
+                ];
+                header('Location: ' . URLROOT . '/auth/login');
+                exit();
+            }
+        } else {
+            $_SESSION['message'] = [
+                'type' => 'danger',
+                'text' => 'Đăng nhập Google thất bại: ' . $result['error']
+            ];
+            header('Location: ' . URLROOT . '/auth/login');
+            exit();
         }
     }
 }
