@@ -35,12 +35,14 @@ function loadEnv($filePath) {
 }
 
 // Load .env.local if exists (local development)
-$envPath = dirname(__DIR__) . '/.env.local';
+// dirname(__DIR__) từ app/config/ = app/
+// dirname(dirname(__DIR__)) từ app/config/ = root/
+$envPath = dirname(dirname(__DIR__)) . '/.env.local';
 if (file_exists($envPath)) {
     loadEnv($envPath);
 } else {
     // Fallback to .env if .env.local doesn't exist
-    $envPath = dirname(__DIR__) . '/.env';
+    $envPath = dirname(dirname(__DIR__)) . '/.env';
     if (file_exists($envPath)) {
         loadEnv($envPath);
     }

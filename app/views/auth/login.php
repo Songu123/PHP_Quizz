@@ -87,7 +87,9 @@
                                 <input class="form-check-input" type="checkbox" id="rememberMe">
                                 <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
                             </div>
-                            <a href="#" class="link-primary">Quên mật khẩu?</a>
+                            <a href="<?php echo URLROOT; ?>/auth/forgotpassword" class="link-primary">
+                                <i class="fas fa-key me-1"></i>Quên mật khẩu?
+                            </a>
                         </div>
                         
                         <!-- Submit Button -->
