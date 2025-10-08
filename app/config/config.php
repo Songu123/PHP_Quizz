@@ -22,3 +22,9 @@ define('SITENAME', 'QuizMaster');
 
 // App version
 define('APPVERSION', '1.0.0');
+
+// Load environment variables from .env.local
+require_once APP . '/config/env_loader.php';
+
+// Load Google OAuth Configuration
+require_once APP . '/config/google_oauth.php';

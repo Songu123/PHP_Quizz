@@ -1,0 +1,42 @@
+# Environment files with secrets
+.env.local
+.env.production
+.env
+
+# Google OAuth credentials (if accidentally created)
+google_credentials.json
+oauth_secrets.php
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+error.log
+debug.log
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Database dumps
+*.sql.gz
+*.sql.zip
+
+# Uploads (if any)
+uploads/*
+!uploads/.gitkeep

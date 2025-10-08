@@ -53,12 +53,29 @@ class User extends Model {
      * Đăng ký user mới
      */
     public function register($data) {
-        $sql = "INSERT INTO {$this->table} (full_name, email, password, created_at) VALUES (:full_name, :email, :password, NOW())";
+        // Tạo username từ email (phần trước @)
+        $username = explode('@', $data['email'])[0];
+        
+        // Loại bỏ ký tự đặc biệt, chỉ giữ chữ và số
+        $username = preg_replace('/[^a-zA-Z0-9]/', '', $username);
+        
+        // Nếu username đã tồn tại, thêm số random
+        $originalUsername = $username;
+        $counter = 1;
+        while ($this->findByUsername($username)) {
+            $username = $originalUsername . $counter;
+            $counter++;
+        }
+        
+        $sql = "INSERT INTO {$this->table} (username, full_name, email, password, role, created_at) 
+                VALUES (:username, :full_name, :email, :password, :role, NOW())";
         
         $params = [
+            'username' => $username,
             'full_name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password']
+            'password' => $data['password'],
+            'role' => 'student' // Mặc định role là student
         ];
         
         if ($this->db->query($sql, $params)) {
@@ -98,5 +115,77 @@ class User extends Model {
         } else {
             return false;
         }
+    }
+    
+    /**
+     * Tìm user theo Google ID
+     */
+    public function findByGoogleId($googleId) {
+        $sql = "SELECT * FROM {$this->table} WHERE google_id = :google_id";
+        $result = $this->db->query($sql, ['google_id' => $googleId]);
+        
+        if ($result->rowCount() > 0) {
+            return $result->fetch();
+        }
+        return false;
+    }
+    
+    /**
+     * Tạo hoặc cập nhật user từ Google
+     */
+    public function createOrUpdateFromGoogle($googleUser) {
+        // Kiểm tra xem user đã tồn tại chưa (theo email hoặc google_id)
+        $existingUser = $this->findUserByEmail($googleUser['email']);
+        
+        if ($existingUser) {
+            // Cập nhật google_id nếu chưa có
+            if (empty($existingUser->google_id)) {
+                $sql = "UPDATE {$this->table} SET google_id = :google_id, avatar = :avatar WHERE id = :id";
+                $this->db->query($sql, [
+                    'google_id' => $googleUser['google_id'],
+                    'avatar' => $googleUser['picture'],
+                    'id' => $existingUser->id
+                ]);
+            }
+            return $existingUser;
+        }
+        
+        // Tạo user mới
+        // Tạo username từ email (phần trước @)
+        $username = explode('@', $googleUser['email'])[0];
+        
+        // Loại bỏ ký tự đặc biệt, chỉ giữ chữ và số
+        $username = preg_replace('/[^a-zA-Z0-9]/', '', $username);
+        
+        // Nếu username rỗng sau khi lọc, dùng "user" + random
+        if (empty($username)) {
+            $username = 'user' . rand(1000, 9999);
+        }
+        
+        // Nếu username đã tồn tại, thêm số random
+        $originalUsername = $username;
+        $counter = 1;
+        while ($this->findByUsername($username)) {
+            $username = $originalUsername . $counter;
+            $counter++;
+        }
+        
+        $sql = "INSERT INTO {$this->table} (username, full_name, email, google_id, avatar, role, created_at) 
+                VALUES (:username, :full_name, :email, :google_id, :avatar, :role, NOW())";
+        
+        $params = [
+            'username' => $username,
+            'full_name' => $googleUser['name'],
+            'email' => $googleUser['email'],
+            'google_id' => $googleUser['google_id'],
+            'avatar' => $googleUser['picture'],
+            'role' => 'student' // Mặc định role là student
+        ];
+        
+        if ($this->db->query($sql, $params)) {
+            return $this->findUserByEmail($googleUser['email']);
+        }
+        
+        return false;
     }
 }
